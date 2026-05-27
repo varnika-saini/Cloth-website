@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #fbf7f2;
+  --fg: #2d2a32;
+  --muted: #6b5b5e;
+  --card: #ffffff;
+  --border: #ede2cf;
+}
+
+.dark {
+  --bg: #1a161c;
+  --fg: #f5f2ef;
+  --muted: #b8a8a8;
+  --card: #25202a;
+  --border: #3a3038;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-feature-settings: "ss01", "ss02";
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #e8c0bd;
+  color: #3d2026;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #b76e79, #cc8881);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white/40 dark:border-white/10;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 active:scale-95;
+  }
+
+  .btn-primary {
+    @apply btn text-white shadow-soft;
+    background-image: linear-gradient(135deg, #b76e79 0%, #80444f 100%);
+  }
+  .btn-primary:hover {
+    filter: brightness(1.06);
+    box-shadow: 0 14px 40px -12px rgba(183, 110, 121, 0.45);
+  }
+
+  .btn-ghost {
+    @apply btn border border-blush-200/70 dark:border-white/10 text-ink-900 dark:text-ink-50 bg-white/70 dark:bg-white/5 backdrop-blur hover:bg-white;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-blush-100 bg-white/80 px-3 py-1 text-xs font-medium text-blush-700 dark:bg-white/5 dark:border-white/10 dark:text-blush-200;
+  }
+
+  .card {
+    @apply rounded-3xl bg-white dark:bg-white/5 border border-beige-200/60 dark:border-white/10 shadow-soft;
+  }
+
+  .input {
+    @apply w-full rounded-full border border-blush-100 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-3 text-sm outline-none placeholder:text-ink-900/40 dark:placeholder:text-white/40 focus:border-blush-300 focus:ring-4 focus:ring-blush-100/60 dark:focus:ring-lavender-500/20 transition;
+  }
+
+  .section {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+  }
+
+  .h-display {
+    @apply font-display tracking-tight;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(45, 42, 50, 0.05),
+    rgba(45, 42, 50, 0.10),
+    rgba(45, 42, 50, 0.05)
+  );
+  background-size: 400% 100%;
+  animation: skel 1.4s ease-in-out infinite;
+  border-radius: 12px;
+}
+.dark .skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.10),
+    rgba(255, 255, 255, 0.05)
+  );
+  background-size: 400% 100%;
+}
+@keyframes skel {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
