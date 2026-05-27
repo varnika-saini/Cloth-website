@@ -35,7 +35,7 @@ function CollectionInner() {
   const [q, setQ] = useState(initialQ);
   const [sizes, setSizes] = useState([]);
   const [colors, setColors] = useState([]);
-  const [price, setPrice] = useState(4000);
+  const [price, setPrice] = useState(500);
   const [sort, setSort] = useState("latest");
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -86,7 +86,7 @@ function CollectionInner() {
     setQ("");
     setSizes([]);
     setColors([]);
-    setPrice(4000);
+    setPrice(500);
     setSort("latest");
   };
 
