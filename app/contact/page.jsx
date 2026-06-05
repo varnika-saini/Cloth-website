@@ -1,15 +1,14 @@
 "use client";
 import { useState } from "react";
-import { FiMail, FiCopy, FiCheck, FiSend, FiPhone } from "react-icons/fi";
-import { FaWhatsapp } from "react-icons/fa6";
+import { FiMail, FiCopy, FiCheck, FiSend } from "react-icons/fi";
+import { FaInstagram } from "react-icons/fa6";
 import { Container } from "@/components/ui/Container";
 import { PageHeader } from "@/components/PageHeader";
 
 const EMAIL = "sainivarnika35@gmail.com";
 
-// Phone — keep digits only for tel:/wa.me links; PHONE_DISPLAY is what users see.
-const PHONE_INTL = "919568202651"; // 91 = India country code
-const PHONE_DISPLAY = "+91 95682 02651";
+const INSTAGRAM_HANDLE = "shortkurticollection";
+const instagramUrl = `https://instagram.com/${INSTAGRAM_HANDLE}`;
 
 const SUBJECT = "Kurti enquiry from ShortKurti website";
 const BODY =
@@ -18,10 +17,6 @@ const BODY =
 const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
   EMAIL
 )}&su=${encodeURIComponent(SUBJECT)}&body=${encodeURIComponent(BODY)}`;
-
-const whatsappUrl = `https://wa.me/${PHONE_INTL}?text=${encodeURIComponent(
-  "Hi Varnika! If you want to buy some kurti — I'd like to order one. Could you share the details?"
-)}`;
 
 export default function ContactPage() {
   const [copied, setCopied] = useState(false);
@@ -49,59 +44,27 @@ export default function ContactPage() {
     <>
       <PageHeader
         eyebrow="Get in touch"
-        title="If you want to buy some kurti just call me"
-        subtitle="Call or WhatsApp me directly, or drop me an email — whatever's easiest for you."
+        title="If you want to buy some kurti just email me"
+        subtitle="Drop me an email and I'll get back to you with all the details."
       />
 
       <Container className="py-12">
         <div className="card animate-fade-up mx-auto max-w-xl p-8 text-center sm:p-10">
           <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-blush-500 to-blush-700 text-white shadow-soft">
-            <FiPhone size={24} />
+            <FiMail size={24} />
           </div>
 
-          <h2 className="h-display mt-6 text-2xl sm:text-3xl">Call me</h2>
+          <h2 className="h-display mt-6 text-2xl sm:text-3xl">Email me</h2>
           <p className="mt-2 text-sm text-ink-900/70 dark:text-white/70">
-            If you want to buy some kurti just call me:
+            If you want to buy some kurti just email me:
           </p>
-
-          {/* Phone number — tap to call */}
-          <a
-            href={`tel:+${PHONE_INTL}`}
-            className="mt-5 inline-flex items-center gap-2 rounded-full border border-blush-200 bg-blush-50 px-6 py-3 text-base font-semibold text-ink-900 transition hover:scale-105 hover:border-blush-500 hover:bg-blush-100 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
-            aria-label="Call this number"
-          >
-            <FiPhone size={18} className="shrink-0 text-blush-600" />
-            {PHONE_DISPLAY}
-          </a>
-
-          {/* Call + WhatsApp buttons */}
-          <div className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <a href={`tel:+${PHONE_INTL}`} className="btn-primary">
-              <FiPhone /> Call now
-            </a>
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-ghost"
-              style={{ borderColor: "#25D366", color: "#128C7E" }}
-            >
-              <FaWhatsapp size={18} /> WhatsApp
-            </a>
-          </div>
-
-          <div className="my-8 flex items-center gap-3 text-xs text-ink-900/40 dark:text-white/40">
-            <span className="h-px flex-1 bg-blush-100 dark:bg-white/10" />
-            or email me
-            <span className="h-px flex-1 bg-blush-100 dark:bg-white/10" />
-          </div>
 
           {/* Email */}
           <a
             href={gmailUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex max-w-full items-center gap-2 rounded-full border border-blush-200 bg-blush-50 px-5 py-3 text-sm font-medium text-ink-900 transition hover:scale-105 hover:border-blush-500 hover:bg-blush-100 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
+            className="group mt-5 inline-flex max-w-full items-center gap-2 rounded-full border border-blush-200 bg-blush-50 px-5 py-3 text-sm font-medium text-ink-900 transition hover:scale-105 hover:border-blush-500 hover:bg-blush-100 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
             aria-label="Send email"
           >
             <FiMail size={16} className="shrink-0 text-blush-600" />
@@ -129,6 +92,24 @@ export default function ContactPage() {
               )}
             </button>
           </div>
+
+          <div className="my-8 flex items-center gap-3 text-xs text-ink-900/40 dark:text-white/40">
+            <span className="h-px flex-1 bg-blush-100 dark:bg-white/10" />
+            or follow me
+            <span className="h-px flex-1 bg-blush-100 dark:bg-white/10" />
+          </div>
+
+          {/* Instagram */}
+          <a
+            href={instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex max-w-full items-center gap-2 rounded-full border border-blush-200 bg-blush-50 px-5 py-3 text-sm font-medium text-ink-900 transition hover:scale-105 hover:border-blush-500 hover:bg-blush-100 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
+            aria-label="Open Instagram profile"
+          >
+            <FaInstagram size={16} className="shrink-0 text-blush-600" />
+            <span className="truncate">@{INSTAGRAM_HANDLE}</span>
+          </a>
         </div>
       </Container>
     </>
