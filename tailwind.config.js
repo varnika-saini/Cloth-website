@@ -22,6 +22,19 @@ module.exports = {
           800: "#5e323b",
           900: "#3d2026",
         },
+        // Lagoon — premium teal secondary accent (added alongside rose-gold)
+        lagoon: {
+          50: "#edfbf8",
+          100: "#d2f4ec",
+          200: "#a7e8db",
+          300: "#71d6c5",
+          400: "#3dbcac",
+          500: "#1aa091",
+          600: "#0f8073",
+          700: "#10665d",
+          800: "#12514b",
+          900: "#13433e",
+        },
         // Warm champagne / bronze (accent)
         lavender: {
           50: "#faf5ec",
@@ -58,12 +71,15 @@ module.exports = {
       boxShadow: {
         soft: "0 10px 30px -12px rgba(183, 110, 121, 0.20)",
         glow: "0 0 0 1px rgba(255,255,255,0.4), 0 20px 40px -20px rgba(183,110,121,0.35)",
+        lagoon: "0 14px 40px -12px rgba(15, 128, 115, 0.35)",
       },
       backgroundImage: {
         "gradient-blush":
           "linear-gradient(135deg, #f3dcdb 0%, #f6efe5 50%, #f2e6cc 100%)",
         "gradient-hero":
           "radial-gradient(1200px 600px at 10% 10%, #f3dcdb 0%, transparent 60%), radial-gradient(900px 500px at 90% 20%, #f2e6cc 0%, transparent 60%), linear-gradient(180deg, #fbf7f2 0%, #fbf7f2 100%)",
+        "gradient-lagoon":
+          "linear-gradient(135deg, #1aa091 0%, #10665d 100%)",
         shimmer:
           "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 100%)",
       },

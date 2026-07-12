@@ -29,6 +29,7 @@ const cols = [
       { href: "/about", label: "Press" },
       { href: "/contact", label: "Careers" },
       { href: "/about", label: "Privacy & Terms" },
+      { href: "/admin", label: "Admin Panel" },
     ],
   },
 ];

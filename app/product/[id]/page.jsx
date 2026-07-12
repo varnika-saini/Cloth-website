@@ -3,7 +3,7 @@ import { use, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { FiMail } from "react-icons/fi";
+import { FiShoppingBag } from "react-icons/fi";
 import { Container } from "@/components/ui/Container";
 import { ProductCard } from "@/components/ProductCard";
 import { Rating } from "@/components/ui/Rating";
@@ -149,10 +149,10 @@ export default function ProductDetails({ params }) {
 
             <div className="mt-8">
               <Link
-                href="/contact"
-                className="btn-primary w-full justify-center"
+                href={`/order/${product.id}`}
+                className="btn-lagoon w-full justify-center"
               >
-                <FiMail /> Enquire to buy
+                <FiShoppingBag /> Buy now
               </Link>
             </div>
           </div>

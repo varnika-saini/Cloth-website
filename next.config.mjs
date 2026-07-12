@@ -13,8 +13,11 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 30,
     deviceSizes: [360, 480, 640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    // Only remote host still used: review avatars.
-    remotePatterns: [{ protocol: "https", hostname: "i.pravatar.cc" }],
+    // Remote hosts: review avatars + Cloudinary product uploads.
+    remotePatterns: [
+      { protocol: "https", hostname: "i.pravatar.cc" },
+      { protocol: "https", hostname: "res.cloudinary.com" },
+    ],
   },
   experimental: {
     optimizePackageImports: ["react-icons"],
