@@ -8,12 +8,14 @@ import { Container } from "@/components/ui/Container";
 import { ProductCard } from "@/components/ProductCard";
 import { Rating } from "@/components/ui/Rating";
 import { Badge } from "@/components/ui/Badge";
-import { findProduct, getRelated } from "@/data/products";
+import { Skeleton } from "@/components/ui/Skeleton";
+import { useProduct, useRelated } from "@/components/ProductsProvider";
 import { formatPrice, cn } from "@/lib/utils";
 
 export default function ProductDetails({ params }) {
   const { id } = use(params);
-  const product = findProduct(id);
+  const { product, loading } = useProduct(id);
+  const { related } = useRelated(id, 4);
   const [activeImg, setActiveImg] = useState(0);
   const [size, setSize] = useState("M");
   const [tab, setTab] = useState("desc");
@@ -23,8 +25,24 @@ export default function ProductDetails({ params }) {
       setSize(product.sizes[Math.floor(product.sizes.length / 2)]);
   }, [product?.id]);
 
+  // While products are still loading we can't know if this id exists yet.
+  if (loading && !product) {
+    return (
+      <Container className="py-10">
+        <div className="grid gap-10 lg:grid-cols-2">
+          <Skeleton className="aspect-[4/5] w-full rounded-3xl" />
+          <div className="space-y-4">
+            <Skeleton className="h-9 w-2/3" />
+            <Skeleton className="h-5 w-1/3" />
+            <Skeleton className="h-24 w-full" />
+            <Skeleton className="h-10 w-full rounded-full" />
+          </div>
+        </div>
+      </Container>
+    );
+  }
+
   if (!product) return notFound();
-  const related = getRelated(product.id, 4);
 
   return (
     <>

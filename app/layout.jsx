@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { QuickViewMount } from "@/components/QuickViewMount";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
+import { ProductsProvider } from "@/components/ProductsProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -49,11 +50,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className="min-h-screen pb-16 font-sans lg:pb-0">
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <QuickViewMount />
-        <MobileBottomNav />
+        <ProductsProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+          <QuickViewMount />
+          <MobileBottomNav />
+        </ProductsProvider>
       </body>
     </html>
   );

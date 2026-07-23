@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FiX } from "react-icons/fi";
 import { useUI } from "@/store/uiStore";
-import { findProduct } from "@/data/products";
+import { useProduct } from "@/components/ProductsProvider";
 import { Rating } from "./ui/Rating";
 import { Badge } from "./ui/Badge";
 import { formatPrice } from "@/lib/utils";
@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
 export function QuickView() {
   const id = useUI((s) => s.quickViewId);
   const close = useUI((s) => s.closeQuickView);
-  const product = id ? findProduct(id) : null;
+  const { product } = useProduct(id);
   const [size, setSize] = useState("M");
 
   useEffect(() => {

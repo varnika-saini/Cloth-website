@@ -8,7 +8,7 @@
 // =====================================================================
 import { NextResponse } from "next/server";
 import { validateOrder } from "@/lib/validation";
-import { findProduct } from "@/data/products";
+import { getProductById } from "@/lib/products";
 import { formatPrice } from "@/lib/utils";
 import {
   sendEmail,
@@ -45,7 +45,7 @@ export async function POST(req) {
   }
 
   // Resolve the product server-side so pricing can't be tampered with.
-  const product = findProduct(body.productId);
+  const product = await getProductById(body.productId);
   if (!product) {
     return NextResponse.json(
       { errors: { productId: "That product could not be found." } },
@@ -55,7 +55,10 @@ export async function POST(req) {
 
   const { name, email, phone, address, size, message } = body;
   const quantity = Number(body.quantity);
-  const total = product.price * quantity;
+  // Prices resolved server-side so totals can't be tampered with.
+  const subtotal = product.price * quantity;
+  const shipping = Number(product.shippingCharge) || 0;
+  const total = subtotal + shipping;
   const ref = `SK-${Date.now().toString(36).toUpperCase()}`;
 
   const summary = `<table style="width:100%;border-collapse:collapse;">
@@ -64,6 +67,8 @@ export async function POST(req) {
     ${row("Size", size)}
     ${row("Quantity", String(quantity))}
     ${row("Unit price", formatPrice(product.price))}
+    ${row("Subtotal", formatPrice(subtotal))}
+    ${row("Shipping", formatPrice(shipping))}
     ${row("Total", formatPrice(total))}
   </table>`;
 

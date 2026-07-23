@@ -3,7 +3,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { Container } from "./ui/Container";
 import { ProductCard } from "./ProductCard";
-import { products } from "@/data/products";
+import { ProductSkeleton } from "./ui/Skeleton";
+import { useProducts } from "@/components/ProductsProvider";
 import { cn } from "@/lib/utils";
 
 const tabs = [
@@ -16,10 +17,12 @@ const tabs = [
 
 export function FeaturedProducts() {
   const [tab, setTab] = useState("all");
-  const list = (tab === "all"
-    ? products
-    : products.filter((p) => p.category === tab)
-  ).slice(0, 8);
+  const { products, loading } = useProducts();
+  const base = tab === "all" ? products : products.filter((p) => p.category === tab);
+  // Products flagged "Featured" in the admin panel float to the front.
+  const list = [...base]
+    .sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0))
+    .slice(0, 8);
 
   return (
     <section className="py-20">
@@ -58,9 +61,13 @@ export function FeaturedProducts() {
           key={tab}
           className="animate-fade-in grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4"
         >
-          {list.map((p, i) => (
-            <ProductCard key={p.id} product={p} index={i} />
-          ))}
+          {loading
+            ? Array.from({ length: 8 }).map((_, i) => (
+                <ProductSkeleton key={i} />
+              ))
+            : list.map((p, i) => (
+                <ProductCard key={p.id} product={p} index={i} />
+              ))}
         </div>
 
         <div className="mt-10 text-center">

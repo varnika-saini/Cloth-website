@@ -12,6 +12,7 @@ import { FiImage, FiList, FiLogOut } from "react-icons/fi";
 import { Container } from "@/components/ui/Container";
 import { PageHeader } from "@/components/PageHeader";
 import { CloudinaryUploader } from "@/components/admin/CloudinaryUploader";
+import { ProductManager } from "@/components/admin/ProductManager";
 
 export default function AdminPage() {
   const router = useRouter();
@@ -32,8 +33,8 @@ export default function AdminPage() {
     <>
       <PageHeader
         eyebrow="Admin"
-        title="Product image uploads"
-        subtitle="Add multiple product photos at once. They upload securely to Cloudinary and return a permanent link."
+        title="Manage products"
+        subtitle="Add, edit and remove products — with images, pricing, shipping and stock — all in one place."
       />
 
       <Container className="py-12">
@@ -42,6 +43,18 @@ export default function AdminPage() {
             <FiLogOut size={16} />
             Log out
           </button>
+        </div>
+
+        {/* Full product management: create / edit / delete */}
+        <ProductManager />
+
+        {/* Standalone image uploader — kept as a handy tool for grabbing
+            Cloudinary URLs on their own (e.g. for other pages). */}
+        <div className="mx-auto mt-12 max-w-4xl border-t border-beige-200/60 pt-10 dark:border-white/10">
+          <h2 className="h-display mb-1 text-xl">Standalone image uploader</h2>
+          <p className="mb-6 text-sm text-ink-900/60 dark:text-white/60">
+            Upload images on their own and copy their permanent Cloudinary links.
+          </p>
         </div>
 
         <div className="card mx-auto max-w-4xl p-6 sm:p-8">

@@ -6,7 +6,7 @@ import { Container } from "@/components/ui/Container";
 import { ProductCard } from "@/components/ProductCard";
 import { PageHeader } from "@/components/PageHeader";
 import { ProductSkeleton } from "@/components/ui/Skeleton";
-import { products } from "@/data/products";
+import { useProducts } from "@/components/ProductsProvider";
 import { categories } from "@/data/categories";
 import { cn } from "@/lib/utils";
 
@@ -35,10 +35,14 @@ function CollectionInner() {
   const [q, setQ] = useState(initialQ);
   const [sizes, setSizes] = useState([]);
   const [colors, setColors] = useState([]);
-  const [price, setPrice] = useState(500);
+  const [price, setPrice] = useState(4000);
   const [sort, setSort] = useState("latest");
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const { products, loading: dataLoading } = useProducts();
+  // Show skeletons while data loads OR while filters settle.
+  const showLoading = loading || dataLoading;
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 450);
@@ -76,7 +80,7 @@ function CollectionInner() {
         list.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
     }
     return list;
-  }, [cat, q, sizes, colors, price, sort]);
+  }, [products, cat, q, sizes, colors, price, sort]);
 
   const toggleArr = (arr, setter, v) =>
     setter(arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v]);
@@ -86,7 +90,7 @@ function CollectionInner() {
     setQ("");
     setSizes([]);
     setColors([]);
-    setPrice(500);
+    setPrice(4000);
     setSort("latest");
   };
 
@@ -207,7 +211,7 @@ function CollectionInner() {
           <div>
             <div className="mb-6 flex items-center justify-between gap-3">
               <div className="text-sm text-ink-900/70 dark:text-white/70">
-                {loading ? "Loading…" : `${filtered.length} products`}
+                {showLoading ? "Loading…" : `${filtered.length} products`}
               </div>
 
               <div className="flex items-center gap-2">
@@ -233,7 +237,7 @@ function CollectionInner() {
             </div>
 
             <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 xl:grid-cols-4">
-              {loading
+              {showLoading
                 ? Array.from({ length: 8 }).map((_, i) => (
                     <ProductSkeleton key={i} />
                   ))
@@ -242,7 +246,7 @@ function CollectionInner() {
                   ))}
             </div>
 
-            {!loading && filtered.length === 0 && (
+            {!showLoading && filtered.length === 0 && (
               <div className="card mt-10 p-10 text-center">
                 <p className="font-display text-xl">No products match your filters.</p>
                 <button onClick={clearAll} className="btn-primary mt-4">

@@ -14,13 +14,13 @@ import {
 } from "react-icons/fi";
 import { Container } from "@/components/ui/Container";
 import { PageHeader } from "@/components/PageHeader";
-import { findProduct } from "@/data/products";
+import { useProduct } from "@/components/ProductsProvider";
 import { formatPrice } from "@/lib/utils";
 import { validateOrder } from "@/lib/validation";
 
 export default function OrderPage({ params }) {
   const { id } = use(params);
-  const product = findProduct(id);
+  const { product, loading } = useProduct(id);
 
   const [form, setForm] = useState({
     name: "",
@@ -46,6 +46,14 @@ export default function OrderPage({ params }) {
     }
   }, [product?.id]);
 
+  if (loading && !product) {
+    return (
+      <Container className="py-20 text-center">
+        <p className="text-sm text-ink-900/70 dark:text-white/70">Loading…</p>
+      </Container>
+    );
+  }
+
   if (!product) {
     return (
       <Container className="py-20 text-center">
@@ -66,7 +74,10 @@ export default function OrderPage({ params }) {
     setErrors((prev) => (prev[k] ? { ...prev, [k]: undefined } : prev));
   };
 
-  const total = product.price * (Number(form.quantity) || 0);
+  const subtotal = product.price * (Number(form.quantity) || 0);
+  // Per-product shipping charge (set in the admin panel).
+  const shipping = Number(product.shippingCharge) || 0;
+  const total = subtotal + shipping;
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -134,6 +145,14 @@ export default function OrderPage({ params }) {
                   {form.size} · {form.quantity}
                 </span>
               </div>
+              <div className="mt-2 flex items-center justify-between">
+                <span className="text-ink-900/60 dark:text-white/60">Subtotal</span>
+                <span className="font-medium">{formatPrice(subtotal)}</span>
+              </div>
+              <div className="mt-2 flex items-center justify-between">
+                <span className="text-ink-900/60 dark:text-white/60">Shipping</span>
+                <span className="font-medium">{formatPrice(shipping)}</span>
+              </div>
               <div className="mt-2 flex items-center justify-between border-t border-beige-200/70 pt-2 dark:border-white/10">
                 <span className="text-ink-900/60 dark:text-white/60">Total</span>
                 <span className="font-display text-lg">{formatPrice(total)}</span>
@@ -200,7 +219,11 @@ export default function OrderPage({ params }) {
                 <span className="text-ink-900/60 dark:text-white/60">
                   {formatPrice(product.price)} × {form.quantity || 0}
                 </span>
-                <span className="font-medium">{formatPrice(total)}</span>
+                <span className="font-medium">{formatPrice(subtotal)}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-ink-900/60 dark:text-white/60">Shipping</span>
+                <span className="font-medium">{formatPrice(shipping)}</span>
               </div>
               <div className="flex items-center justify-between border-t border-beige-200/70 pt-2 dark:border-white/10">
                 <span className="font-medium">Total</span>
